@@ -1,0 +1,21 @@
+{
+  "name": "tas-node",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "npm-run-all --parallel watch:server watch:build",
+    "watch:build": "webpack --watch",
+    "watch:server": "nodemon --inspect=\"9229\" \"./build/bundle.js\" --watch \"./build\" "
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "nodemon": "^1.12.1",
+    "npm-run-all": "^4.1.1",
+    "regenerator-runtime": "^0.12.1",
+    "webpack": "^3.8.1"
+  }
+}
