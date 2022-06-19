@@ -10,16 +10,18 @@ export const handleSingle = async (req, res) => {
 export const handleMultiple = async (req, res) => {
     const payload = req.body
     const promises = Object.keys(payload).map(async (index) => {
+        const { url, language, fullName } = payload[index]
+        let res = { url, language, index, fullName, score: 'URL invalid or language no supported' }
+        console.log(url, language)
         try {
-            const { url, language } = payload[index]
-            console.log(url, language)
-
             if (url && language) {
-                return { index, score: await invokeRunner(url, language) }
+                res.score = await invokeRunner(url, language)
+                return res
             }
-            return { index, score: 'URL invalid or language no supported' }
+            return res
         } catch (e) {
-            return { index, e }
+            res.score = e
+            return res
         }
     })
 
@@ -27,6 +29,7 @@ export const handleMultiple = async (req, res) => {
         .then((values) => {
             return values.map((v) => ({
                 index: v.value.index,
+                // fullName: v.value.fullName,
                 score: v.status === 'fulfilled' ? v.value.score : v.reason
             }))
             /* const payload = values.reduce((acc, v) => {
@@ -42,5 +45,5 @@ export const handleMultiple = async (req, res) => {
         .catch((e) => {
             res.end(e)
         })
-    return res.status(200).json(JSON.stringify(response))
+    return res.status(200).json(response)
 }

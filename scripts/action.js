@@ -1,4 +1,5 @@
 const SUBMISSION_URL_INDEX = 1; // "A"
+const FULL_NAME_INDEX = 2; // "C"
 const SUB_TRACK_INDEX = 11; // "L"
 const SCORE_RANGE = 52; // "AZ" 
 const TAS_URL = "http://7d15-23-27-44-176.ngrok.io"; // "https://tas-staging.herokuapp.com";
@@ -59,19 +60,25 @@ function MarkAll() {
     if (index === 0) return acc
     const url = validURL(values[SUBMISSION_URL_INDEX]);
     const language = subTrackOptionsFallback(values[SUB_TRACK_INDEX]);
-    
+    const fullName = values[FULL_NAME_INDEX] ?? null;
+
     if (language === null) return acc; // skip unsupported languages
     return {
       ...acc,
-      [index]: { url, language }
+      [index]: { url, language, fullName }
     }
   }, {})
 
   // fetch score data from server.
   const response = fetch(`${TAS_URL}/data/many`, payload)
-  Logger.log(response)
-  JSON.parse(response).map((v) => {
-    sheet.getRange(v.index, SCORE_RANGE).setValue(v.score)
+  Logger.log(response);
+  
+  const values = JSON.parse(response.getContentText());
+  values.map((v) => {
+    Logger.log(v)
+    if (v.index) {
+      sheet.getRange(v.index, SCORE_RANGE).setValue(v.score)
+    }
   })
 }
 
