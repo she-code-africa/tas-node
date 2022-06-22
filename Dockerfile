@@ -43,4 +43,4 @@ ENV PORT=$PORT
 
 EXPOSE $PORT
 
-CMD npm run start
+CMD node build/bundle.js
