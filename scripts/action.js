@@ -2,7 +2,7 @@ const SUBMISSION_URL_INDEX = 1; // "A"
 const FULL_NAME_INDEX = 2; // "C"
 const SUB_TRACK_INDEX = 11; // "L"
 const SCORE_RANGE = 52; // "AZ" 
-const TAS_URL = "http://7d15-23-27-44-176.ngrok.io"; // "https://tas-staging.herokuapp.com";
+const TAS_URL = "https://tas-node.onrender.com"; // "https://tas-staging.herokuapp.com";
 
 // TODO: exit early if url invalid.
 const validURL = (url) => {
