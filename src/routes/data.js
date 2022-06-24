@@ -1,9 +1,8 @@
-import { invokeRunner } from "../utils";
+import { cleanURL, invokeRunner } from "../utils";
 
 export const handleSingle = async (req, res) => {
-    const { url, language } = JSON.parse(req.body);
-
-    const response = await invokeRunner(url, language)
+    const { url, language } = req.body;
+    const response = await invokeRunner(cleanURL(url), language)
     res.status(200).json(response)
 };
 
@@ -15,7 +14,7 @@ export const handleMultiple = async (req, res) => {
         console.log(url, language)
         try {
             if (url && language) {
-                res.score = await invokeRunner(url, language)
+                res.score = await invokeRunner(cleanURL(url), language)
                 return res
             }
             return res

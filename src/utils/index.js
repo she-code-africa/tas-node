@@ -23,3 +23,9 @@ export function invokeRunner(url, language) {
       return 'Failed'
     })
 }
+
+export function cleanURL(url) {
+  const _url = new URL(url)
+  const paths = _url.pathname.split('/')
+  return `${_url.origin}/${paths[1]}/${paths[2]}`
+}
